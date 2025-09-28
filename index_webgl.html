@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Coin App - WebGL</title>
+  <!-- Three.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.154.0/build/three.min.js"></script>
+  <style>
+    body { margin: 0; background: #181828; }
+    #coin-canvas { display: block; margin: 0 auto; }
+    .watermark {
+      position: absolute;
+      bottom: 32px;
+      width: 100%;
+      text-align: center;
+      color: #39ff39;
+      font-size: 1.1em;
+      opacity: 0.5;
+      font-family: Arial, sans-serif;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="container"></div>
+  <div class="watermark">art and design by gbailey - worker beez designs 2025</div>
+  <script>
+    // Placeholder for WebGL coin rendering
+    // You can add Three.js code here to create a 3D coin
+    const container = document.getElementById('container');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({antialias: true});
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    container.appendChild(renderer.domElement);
+    camera.position.z = 5;
+    // Add ambient light
+    scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+    // Add a placeholder coin (cylinder)
+    const geometry = new THREE.CylinderGeometry(1, 1, 0.2, 64);
+    const material = new THREE.MeshStandardMaterial({color: 0x222222, metalness: 0.8, roughness: 0.3});
+    const coin = new THREE.Mesh(geometry, material);
+    scene.add(coin);
+    // Animation loop
+    function animate() {
+      requestAnimationFrame(animate);
+      coin.rotation.y += 0.01;
+      renderer.render(scene, camera);
+    }
+    animate();
+    // Responsive resize
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+</body>
+</html>
